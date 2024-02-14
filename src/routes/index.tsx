@@ -1,7 +1,7 @@
 import { Navigate, useRoutes } from 'react-router-dom';
 import { protectedRoutes } from './protected';
 import { publicRoutes } from './public';
-import Products from '../pages/products/Products';
+import Home from '../pages/home/Home';
 import PageNotFound from '../pages/not_found/PageNotFound';
 import { useStoreCtx } from '../store/useStoreCtx';
 import Cart from '../pages/cart/Cart';
@@ -19,7 +19,7 @@ export const AppRoutes = () => {
   }, []);
   const commonRoutes = [
     { path: '/', element: <Navigate replace to="/home" /> },
-    { path: '/home', element: <Products /> },
+    { path: '/home', element: <Home /> },
     { path: '/cart', element: <Cart /> },
     {
       path: '*',
