@@ -16,7 +16,7 @@ export type UserResponseProp = {
   gender: string;
   image: string;
   token: string;
-  message?: string
+  message?: string;
 };
 
 export type ResponseError = {
@@ -27,4 +27,25 @@ export type StoreContextType = {
   authUser: UserResponseProp | null;
   error: ResponseError | null;
   setUser: (user: UserResponseProp) => void;
+};
+
+export type Product = {
+  id: number;
+  title: string;
+  description: string;
+  price: number;
+  discountPercentage: number;
+  rating: number;
+  stock: number;
+  brand: string;
+  category: string;
+  thumbnail: string;
+  images: string[];
+};
+
+export type ProductList = {
+  products: Product[];
+  total: number;
+  limit: number;
+  skip: number;
 };
