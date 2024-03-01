@@ -29,23 +29,34 @@ export type StoreContextType = {
   setUser: (user: UserResponseProp) => void;
 };
 
-export type Product = {
+export type TProduct = {
   id: number;
   title: string;
   description: string;
   price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
+  discountPercentage?: number;
+  rating?: number;
+  stock?: number;
   brand: string;
-  category: string;
-  thumbnail: string;
-  images: string[];
+  category?: string;
+  thumbnail?: string;
+  images: string;
+  innerRef?: IntersectionObserver | null;
 };
 
-export type ProductList = {
-  products: Product[];
+export type TProductList = {
+  products: TProduct[];
   total: number;
   limit: number;
   skip: number;
+  ref?: IntersectionObserver | null;
+};
+
+export type TData = {
+  skip: number;
+  limit: number;
+  total: number;
+  products: TProduct[];
+  pages: [TProductList];
+  pageParams: number[];
 };
