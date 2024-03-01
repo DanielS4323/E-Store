@@ -1,13 +1,18 @@
-import { Input, Search } from 'semantic-ui-react';
+import { Input } from 'semantic-ui-react';
 
-const SearchBar = ({ searchQuery, setSetSearchQuery }) => {
+type SearchBarProps = {
+  searchQuery: string;
+  onChangeHandle: () => void;
+};
+
+const SearchBar = ({ searchQuery, onChangeHandle }: SearchBarProps) => {
   return (
     <Input
-      size='large'
-      icon='search'
+      size="large"
+      icon="search"
       placeholder="Search Products"
       value={searchQuery}
-      onChange={(e) => setSetSearchQuery(e.target.value)}
+      onChange={onChangeHandle}
     />
   );
 };
