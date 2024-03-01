@@ -8,37 +8,32 @@ import { getAllProducts } from './products_query';
 import { useInView } from 'react-intersection-observer';
 import Product from '../../components/Product/Product';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import {type TProduct } from '../../store/types';
+import { type TProduct } from '../../store/types';
 
 const Home = () => {
   const [searchQuery, setSetSearchQuery] = useState<string>('');
   const debouncedSearch = useDebounce(searchQuery);
 
-  const {
-    data,
-    isLoading,
-    error,
-    fetchNextPage,
-    hasNextPage,
-  } = useInfiniteQuery({
-    queryKey: [debouncedSearch],
-    queryFn: ({ pageParam }) =>
-      debouncedSearch
-        ? searchProducts(debouncedSearch)
-        : getAllProducts(pageParam),
-    initialPageParam: 10,
-    getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      const totalPages = lastPage.total;
-      const currentNumberOfPages = lastPage.limit;
-      return totalPages > currentNumberOfPages ? lastPageParam + 10 : undefined;
-    },
-  });
+  const { data, isLoading, error, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: [debouncedSearch],
+      queryFn: ({ pageParam }) =>
+        debouncedSearch
+          ? searchProducts(debouncedSearch)
+          : getAllProducts(pageParam),
+      initialPageParam: 10,
+      getNextPageParam: (lastPage, allPages, lastPageParam) => {
+        const totalPages = lastPage.total;
+        const currentNumberOfPages = lastPage.limit;
+        return totalPages > currentNumberOfPages
+          ? lastPageParam + 10
+          : undefined;
+      },
+    });
 
   const { ref, inView } = useInView({
     threshold: 1,
   });
-
-  console.log(debouncedSearch);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -46,14 +41,15 @@ const Home = () => {
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
+  function onChangeHandle(e) {
+    setSetSearchQuery(e.target.value)
+  }
+
   return (
     <div style={{ marginTop: 200, height: 'auto' }}>
       {error && <p>Error: Could not fetch.</p>}
       <Grid centered>
-        <SearchBar
-          searchQuery={searchQuery}
-          setSetSearchQuery={setSetSearchQuery}
-        />
+        <SearchBar searchQuery={searchQuery} onChangeHandle={onChangeHandle} />
       </Grid>
       <Grid columns={4} centered style={{ marginTop: 50 }}>
         {isLoading && <LoadingSpinner />}
