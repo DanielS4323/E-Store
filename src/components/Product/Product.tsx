@@ -1,37 +1,30 @@
 import { Link } from 'react-router-dom';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardMeta,
-  Image,
-} from 'semantic-ui-react';
-import { Product } from '../../store/types';
+import { Card, Grid, Image } from 'semantic-ui-react';
+import { TProduct } from '../../store/types';
+import { forwardRef } from 'react';
 
-const Product = ({
-  id,
-  thumbnail,
-  title,
-  description,
-  price,
-  brand,
-}: Product) => {
-  return (
-    <Link to={`/${id}`}>
-      <Card key={id}>
-        <Image src={thumbnail} wrapped />
-        <CardContent>
-          <CardHeader>{brand}</CardHeader>
-          <CardMeta>
-            <span>{title}</span>
-          </CardMeta>
-          <CardDescription>{description}</CardDescription>
-          <CardMeta>{price}</CardMeta>
-        </CardContent>
-      </Card>
-    </Link>
-  );
-};
-
+const Product = forwardRef(
+  ({ id, images, title, description, price, brand }: TProduct, ref) => {
+    return (
+      <Grid.Column mobile={16} tablet={8} computer={4}>
+        <Card.Group centered style={{ margin: 10 }}>
+          <Link to={`/${id}`}>
+            <Card link key={id}>
+              <Image size="small" centered src={images} wrapped />
+              <Card.Content>
+                <Card.Header>{brand}</Card.Header>
+                <Card.Meta>
+                  <h3>{title}</h3>
+                </Card.Meta>
+                <Card.Description>{description}</Card.Description>
+                <Card.Meta>${price}</Card.Meta>
+                <div ref={ref}></div>
+              </Card.Content>
+            </Card>
+          </Link>
+        </Card.Group>
+      </Grid.Column>
+    );
+  },
+);
 export default Product;
