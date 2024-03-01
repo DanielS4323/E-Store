@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 const ErrorFallback = () => {
   return (
     <div className="" role="alert">
-      <h2 className="">Ooops, something went wrong </h2>
+      <h2 className="">Ooops, something went wrong. </h2>
       <Button
         className="mt-4"
         onClick={() => window.location.assign(window.location.origin)}
@@ -36,6 +36,5 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         </QueryClientProvider>
       </StoreContextProvider>
     </ErrorBoundary>
-    // </React.Suspense>
   );
 };
