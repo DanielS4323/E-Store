@@ -1,8 +1,9 @@
+import { type ChangeEvent } from 'react';
 import { Input } from 'semantic-ui-react';
 
 type SearchBarProps = {
   searchQuery: string;
-  onChangeHandle: () => void;
+  onChangeHandle: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const SearchBar = ({ searchQuery, onChangeHandle }: SearchBarProps) => {
