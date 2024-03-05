@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Card, Grid, Image } from 'semantic-ui-react';
+import { Card, Divider, Grid, Image } from 'semantic-ui-react';
 import { TProduct } from '../../store/types';
 import { forwardRef } from 'react';
 
@@ -17,7 +17,10 @@ const Product = forwardRef(
                   <h3>{title}</h3>
                 </Card.Meta>
                 <Card.Description>{description}</Card.Description>
-                <Card.Meta>${price}</Card.Meta>
+                <Divider/>
+                <Card.Meta>
+                  <h3>${price}</h3>
+                </Card.Meta>
                 <div ref={ref}></div>
               </Card.Content>
             </Card>
