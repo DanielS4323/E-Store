@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Grid } from 'semantic-ui-react';
+import { useState, useEffect, type ChangeEvent } from 'react';
+import { Grid, GridRow } from 'semantic-ui-react';
 import useDebounce from '../../utilities/useDebounce';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import LoadingSpinner from '../../components/UI/LoadingSpinner';
@@ -31,6 +31,8 @@ const Home = () => {
       },
     });
 
+  const totalData = data?.pages[data?.pages.length - 1].total;
+
   const { ref, inView } = useInView({
     threshold: 1,
   });
@@ -41,18 +43,29 @@ const Home = () => {
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
-  function onChangeHandle(e) {
-    setSetSearchQuery(e.target.value)
+  function onChangeHandle(e: ChangeEvent<HTMLInputElement>): void {
+    setSetSearchQuery(e.target.value);
   }
+
+  const noDataMessage = totalData == 0 && <h3>No exact matches found</h3>;
 
   return (
     <div style={{ marginTop: 200, height: 'auto' }}>
-      {error && <p>Error: Could not fetch.</p>}
-      <Grid centered>
-        <SearchBar searchQuery={searchQuery} onChangeHandle={onChangeHandle} />
+      {error && <h3>Error: Could not fetch.</h3>}
+      <Grid centered textAlign="center" columns="equal">
+        <GridRow>
+          <SearchBar
+            searchQuery={searchQuery}
+            onChangeHandle={onChangeHandle}
+          />
+        </GridRow>
       </Grid>
       <Grid columns={4} centered style={{ marginTop: 50 }}>
         {isLoading && <LoadingSpinner />}
+        <GridRow>
+          {debouncedSearch && totalData > 0 && <p>{totalData} results found</p>}
+        </GridRow>
+        <GridRow>{noDataMessage}</GridRow>
         {data &&
           data.pages[data.pages.length - 1].products.map(
             (product: TProduct) => (
