@@ -7,6 +7,7 @@ import { useStoreCtx } from '../store/useStoreCtx';
 import Cart from '../pages/cart/Cart';
 import { useEffect } from 'react';
 import storage from '../utilities/storage';
+import ProductDetail from '../pages/product/ProductDetail';
 
 export const AppRoutes = () => {
   const { authUser, setUser } = useStoreCtx();
@@ -20,6 +21,7 @@ export const AppRoutes = () => {
   const commonRoutes = [
     { path: '/', element: <Navigate replace to="/home" /> },
     { path: '/home', element: <Home /> },
+    { path: 'home/:id', element: <ProductDetail /> },
     { path: '/cart', element: <Cart /> },
     {
       path: '*',
